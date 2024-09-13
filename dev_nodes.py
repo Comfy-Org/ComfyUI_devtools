@@ -28,12 +28,49 @@ class ErrorRaiseNodeWithMessage:
         raise Exception(message)
 
 
+class ExperimentalNode:
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {"required": {}}
+
+    RETURN_TYPES = ()
+    OUTPUT_NODE = True
+    FUNCTION = "experimental_function"
+    CATEGORY = "DevTools"
+    DESCRIPTION = "A experimental node"
+
+    EXPERIMENTAL = True
+
+    def experimental_function(self):
+        print("Experimental node was called!")
+
+class DeprecatedNode:
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {"required": {}}
+
+    RETURN_TYPES = ()
+    OUTPUT_NODE = True
+    FUNCTION = "deprecated_function"
+    CATEGORY = "DevTools"
+    DESCRIPTION = "A deprecated node"
+
+    DEPRECATED = True
+
+    def deprecated_function(self):
+        print("Deprecated node was called!")
+
+
 NODE_CLASS_MAPPINGS = {
     "DevToolsErrorRaiseNode": ErrorRaiseNode,
     "DevToolsErrorRaiseNodeWithMessage": ErrorRaiseNodeWithMessage,
+    "DevToolsExperimentalNode": ExperimentalNode,
+    "DevToolsDeprecatedNode": DeprecatedNode,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
     "DevToolsErrorRaiseNode": "Raise Error",
     "DevToolsErrorRaiseNodeWithMessage": "Raise Error with Message",
+    "DevToolsExperimentalNode": "Experimental Node",
+    "DevToolsDeprecatedNode": "Deprecated Node",
 }
