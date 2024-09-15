@@ -61,11 +61,27 @@ class DeprecatedNode:
         print("Deprecated node was called!")
 
 
+class LongComboDropdown:
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {"required": {"option": ([f"Option {i}" for i in range(1000 * 1000)],)}}
+
+    RETURN_TYPES = ()
+    OUTPUT_NODE = True
+    FUNCTION = "long_combo_dropdown"
+    CATEGORY = "DevTools"
+    DESCRIPTION = "A long combo dropdown"
+
+    def long_combo_dropdown(self, option: str):
+        print(option)
+
+
 NODE_CLASS_MAPPINGS = {
     "DevToolsErrorRaiseNode": ErrorRaiseNode,
     "DevToolsErrorRaiseNodeWithMessage": ErrorRaiseNodeWithMessage,
     "DevToolsExperimentalNode": ExperimentalNode,
     "DevToolsDeprecatedNode": DeprecatedNode,
+    "DevToolsLongComboDropdown": LongComboDropdown,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
@@ -73,4 +89,5 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "DevToolsErrorRaiseNodeWithMessage": "Raise Error with Message",
     "DevToolsExperimentalNode": "Experimental Node",
     "DevToolsDeprecatedNode": "Deprecated Node",
+    "DevToolsLongComboDropdown": "Long Combo Dropdown",
 }
