@@ -122,6 +122,27 @@ class NodeWithOutputList:
         return (1, [1, 2, 3])
 
 
+class NodeWithForceInput:
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "int_input": ("INT", {"forceInput": True}),
+                "int_input_widget": ("INT", {"default": 1}),
+            },
+            "optional": {"float_input": ("FLOAT", {"forceInput": True})},
+        }
+
+    RETURN_TYPES = ()
+    OUTPUT_NODE = True
+    FUNCTION = "node_with_force_input"
+    CATEGORY = "DevTools"
+    DESCRIPTION = "A node with a forced input"
+
+    def node_with_force_input(self, int_input: int, int_input_widget: int, float_input: float = 0.0):
+        print(f"int_input: {int_input}, int_input_widget: {int_input_widget}, float_input: {float_input}")
+
+
 NODE_CLASS_MAPPINGS = {
     "DevToolsErrorRaiseNode": ErrorRaiseNode,
     "DevToolsErrorRaiseNodeWithMessage": ErrorRaiseNodeWithMessage,
@@ -130,6 +151,7 @@ NODE_CLASS_MAPPINGS = {
     "DevToolsLongComboDropdown": LongComboDropdown,
     "DevToolsNodeWithOptionalInput": NodeWithOptionalInput,
     "DevToolsNodeWithOutputList": NodeWithOutputList,
+    "DevToolsNodeWithForceInput": NodeWithForceInput,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
@@ -140,4 +162,5 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "DevToolsLongComboDropdown": "Long Combo Dropdown",
     "DevToolsNodeWithOptionalInput": "Node With Optional Input",
     "DevToolsNodeWithOutputList": "Node With Output List",
+    "DevToolsNodeWithForceInput": "Node With Force Input",
 }
