@@ -169,6 +169,7 @@ NODE_CLASS_MAPPINGS = {
     "DevToolsDeprecatedNode": DeprecatedNode,
     "DevToolsLongComboDropdown": LongComboDropdown,
     "DevToolsNodeWithOptionalInput": NodeWithOptionalInput,
+    "DevToolsNodeWithOnlyOptionalInput": NodeWithOnlyOptionalInput,
     "DevToolsNodeWithOutputList": NodeWithOutputList,
     "DevToolsNodeWithForceInput": NodeWithForceInput,
 }
@@ -180,6 +181,7 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "DevToolsDeprecatedNode": "Deprecated Node",
     "DevToolsLongComboDropdown": "Long Combo Dropdown",
     "DevToolsNodeWithOptionalInput": "Node With Optional Input",
+    "DevToolsNodeWithOnlyOptionalInput": "Node With Only Optional Input",
     "DevToolsNodeWithOutputList": "Node With Output List",
     "DevToolsNodeWithForceInput": "Node With Force Input",
 }
