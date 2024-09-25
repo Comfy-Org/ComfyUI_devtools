@@ -97,6 +97,25 @@ class NodeWithOptionalInput:
         return (required_input,)
 
 
+class NodeWithOnlyOptionalInput:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {
+            "optional": {
+                "text": ("STRING", {"multiline": True, "dynamicPrompts": True}), 
+                "clip": ("CLIP", {})
+            }
+        }
+    
+    RETURN_TYPES = ()
+    FUNCTION = "node_with_only_optional_input"
+    CATEGORY = "DevTools"
+    DESCRIPTION = "A node with only optional input"
+
+    def node_with_only_optional_input(self, clip=None, text=None):
+        pass
+
+
 class NodeWithOutputList:
     @classmethod
     def INPUT_TYPES(cls):
