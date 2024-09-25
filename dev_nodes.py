@@ -97,6 +97,25 @@ class NodeWithOptionalInput:
         return (required_input,)
 
 
+class NodeWithOnlyOptionalInput:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {
+            "optional": {
+                "text": ("STRING", {"multiline": True, "dynamicPrompts": True}), 
+                "clip": ("CLIP", {})
+            }
+        }
+    
+    RETURN_TYPES = ()
+    FUNCTION = "node_with_only_optional_input"
+    CATEGORY = "DevTools"
+    DESCRIPTION = "A node with only optional input"
+
+    def node_with_only_optional_input(self, clip=None, text=None):
+        pass
+
+
 class NodeWithOutputList:
     @classmethod
     def INPUT_TYPES(cls):
@@ -150,6 +169,7 @@ NODE_CLASS_MAPPINGS = {
     "DevToolsDeprecatedNode": DeprecatedNode,
     "DevToolsLongComboDropdown": LongComboDropdown,
     "DevToolsNodeWithOptionalInput": NodeWithOptionalInput,
+    "DevToolsNodeWithOnlyOptionalInput": NodeWithOnlyOptionalInput,
     "DevToolsNodeWithOutputList": NodeWithOutputList,
     "DevToolsNodeWithForceInput": NodeWithForceInput,
 }
@@ -161,6 +181,7 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "DevToolsDeprecatedNode": "Deprecated Node",
     "DevToolsLongComboDropdown": "Long Combo Dropdown",
     "DevToolsNodeWithOptionalInput": "Node With Optional Input",
+    "DevToolsNodeWithOnlyOptionalInput": "Node With Only Optional Input",
     "DevToolsNodeWithOutputList": "Node With Output List",
     "DevToolsNodeWithForceInput": "Node With Force Input",
 }
