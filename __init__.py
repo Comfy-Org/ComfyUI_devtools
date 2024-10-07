@@ -60,7 +60,7 @@ async def setup_folder_structure(request):
         tree_structure = data.get("tree_structure")
         base_path = os.path.join(folder_paths.base_path, data.get("base_path", "users/workflows"))
 
-        if not tree_structure or not isinstance(tree_structure, dict):
+        if not isinstance(tree_structure, dict):
             return web.Response(status=400, text="Invalid tree structure")
 
         write_tree_structure(tree_structure, base_path)
