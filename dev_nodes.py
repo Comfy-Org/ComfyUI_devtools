@@ -102,11 +102,11 @@ class NodeWithOnlyOptionalInput:
     def INPUT_TYPES(s):
         return {
             "optional": {
-                "text": ("STRING", {"multiline": True, "dynamicPrompts": True}), 
+                "text": ("STRING", {"multiline": True, "dynamicPrompts": True}),
                 "clip": ("CLIP", {})
             }
         }
-    
+
     RETURN_TYPES = ()
     FUNCTION = "node_with_only_optional_input"
     CATEGORY = "DevTools"
