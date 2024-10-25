@@ -80,9 +80,11 @@ async def set_settings(request):
     try:
         settings = await request.json()
         user_root = folder_paths.get_user_directory()
-        settings_file_path = os.path.abspath(
-            os.path.join(user_root, "default", "comfy.settings.json")
-        )
+        settings_file_path = os.path.join(user_root, "default", "comfy.settings.json")
+
+        # Ensure the directory structure exists
+        os.makedirs(os.path.dirname(settings_file_path), exist_ok=True)
+
         with open(settings_file_path, "w") as f:
             f.write(json.dumps(settings, indent=4))
         return web.Response(status=200)
