@@ -58,7 +58,9 @@ async def setup_folder_structure(request):
     try:
         data = await request.json()
         tree_structure = data.get("tree_structure")
-        base_path = os.path.join(folder_paths.base_path, data.get("base_path", "users/workflows"))
+        base_path = os.path.join(
+            folder_paths.base_path, data.get("base_path", "users/workflows")
+        )
 
         if not isinstance(tree_structure, dict):
             return web.Response(status=400, text="Invalid tree structure")
@@ -69,6 +71,20 @@ async def setup_folder_structure(request):
         return web.Response(status=400, text="Invalid JSON data")
     except Exception as e:
         return web.Response(status=500, text=f"Error: {str(e)}")
+
+
+@server.PromptServer.instance.routes.post("/devtools/set_settings")
+async def set_settings(request):
+    """Directly set the settings for the default user, instead of merging with
+    the existing settings."""
+    settings = await request.json()
+    user_root = folder_paths.get_user_directory()
+    settings_file_path = os.path.abspath(
+        os.path.join(user_root, "default", "comfy.settings.json")
+    )
+    with open(settings_file_path, "w") as f:
+        f.write(json.dumps(settings, indent=4))
+    return web.Response(status=200)
 
 
 __all__ = ["NODE_CLASS_MAPPINGS", "NODE_DISPLAY_NAME_MAPPINGS"]
