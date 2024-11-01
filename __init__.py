@@ -8,18 +8,19 @@ from typing import Union
 
 import server
 from aiohttp import web
+from aiohttp.web_request import Request
 import folder_paths
 from folder_paths import models_dir
 
 
 @server.PromptServer.instance.routes.get("/devtools/fake_model.safetensors")
-async def fake_model(request):
+async def fake_model(request: Request):
     file_path = os.path.join(os.path.dirname(__file__), "fake_model.safetensors")
     return web.FileResponse(file_path)
 
 
 @server.PromptServer.instance.routes.get("/devtools/cleanup_fake_model")
-async def cleanup_fake_model(request):
+async def cleanup_fake_model(request: Request):
     model_folder = request.query.get("model_folder", "clip")
     model_path = os.path.join(models_dir, model_folder, "fake_model.safetensors")
     if os.path.exists(model_path):
@@ -54,7 +55,7 @@ def write_tree_structure(tree: TreeType, base_path: str):
 
 
 @server.PromptServer.instance.routes.post("/devtools/setup_folder_structure")
-async def setup_folder_structure(request):
+async def setup_folder_structure(request: Request):
     try:
         data = await request.json()
         tree_structure = data.get("tree_structure")
@@ -74,7 +75,7 @@ async def setup_folder_structure(request):
 
 
 @server.PromptServer.instance.routes.post("/devtools/set_settings")
-async def set_settings(request):
+async def set_settings(request: Request):
     """Directly set the settings for the default user, instead of merging with
     the existing settings."""
     try:
