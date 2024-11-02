@@ -76,12 +76,16 @@ async def setup_folder_structure(request: Request):
 
 @server.PromptServer.instance.routes.post("/devtools/set_settings")
 async def set_settings(request: Request):
-    """Directly set the settings for the default user, instead of merging with
-    the existing settings."""
+    """Directly set the settings for the user specified via `Comfy.userId`,
+    instead of merging with the existing settings."""
     try:
-        settings = await request.json()
+        settings: dict[str, str | bool | int | float] = await request.json()
         user_root = folder_paths.get_user_directory()
-        settings_file_path = os.path.join(user_root, "default", "comfy.settings.json")
+        try:
+            user_id: str = settings.pop("Comfy.userId")
+        except KeyError:
+            user_id = "default"
+        settings_file_path = os.path.join(user_root, user_id, "comfy.settings.json")
 
         # Ensure the directory structure exists
         os.makedirs(os.path.dirname(settings_file_path), exist_ok=True)
