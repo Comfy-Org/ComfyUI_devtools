@@ -161,6 +161,19 @@ class NodeWithForceInput:
     def node_with_force_input(self, int_input: int, int_input_widget: int, float_input: float = 0.0):
         print(f"int_input: {int_input}, int_input_widget: {int_input_widget}, float_input: {float_input}")
 
+class NodeWithStringInput:
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {"required": {"string_input": ("STRING",)}}
+
+    RETURN_TYPES = ()
+    FUNCTION = "node_with_string_input"
+    CATEGORY = "DevTools"
+    DESCRIPTION = "A node with a string input"
+
+    def node_with_string_input(self, string_input: str):
+        print(f"string_input: {string_input}")
+
 
 NODE_CLASS_MAPPINGS = {
     "DevToolsErrorRaiseNode": ErrorRaiseNode,
@@ -172,6 +185,7 @@ NODE_CLASS_MAPPINGS = {
     "DevToolsNodeWithOnlyOptionalInput": NodeWithOnlyOptionalInput,
     "DevToolsNodeWithOutputList": NodeWithOutputList,
     "DevToolsNodeWithForceInput": NodeWithForceInput,
+    "DevToolsNodeWithStringInput": NodeWithStringInput,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
@@ -184,4 +198,5 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "DevToolsNodeWithOnlyOptionalInput": "Node With Only Optional Input",
     "DevToolsNodeWithOutputList": "Node With Output List",
     "DevToolsNodeWithForceInput": "Node With Force Input",
+    "DevToolsNodeWithStringInput": "Node With String Input",
 }
