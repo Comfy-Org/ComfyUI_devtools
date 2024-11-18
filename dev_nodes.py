@@ -174,6 +174,26 @@ class NodeWithStringInput:
     def node_with_string_input(self, string_input: str):
         print(f"string_input: {string_input}")
 
+class NodeWithAdvancedWidgets:
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "advanced_combo": (("a", "b"), { "advanced": True, "default": "b" }), 
+                "normal_widget": ("INT", { "default": 1 },),
+                "advanced_int": ("INT", { "advanced": True, "default": 2, }),
+                "advanced_text": ("STRING", { "advanced": True, "default": "z" }),
+            }
+        }
+
+    RETURN_TYPES = ()
+    FUNCTION = "node_with_advanced_widgets"
+    CATEGORY = "DevTools"
+    DESCRIPTION = "A node with advanced widgets"
+
+    def node_with_advanced_widgets(self, advanced_combo: str, normal_widget: int, advanced_int: int, advanced_text: str):
+        print(f"values: {advanced_combo}, {normal_widget}, {advanced_int}, {advanced_text}")
+
 
 NODE_CLASS_MAPPINGS = {
     "DevToolsErrorRaiseNode": ErrorRaiseNode,
@@ -186,6 +206,7 @@ NODE_CLASS_MAPPINGS = {
     "DevToolsNodeWithOutputList": NodeWithOutputList,
     "DevToolsNodeWithForceInput": NodeWithForceInput,
     "DevToolsNodeWithStringInput": NodeWithStringInput,
+    "DevToolsNodeWithAdvancedWidgets": NodeWithAdvancedWidgets,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
@@ -199,4 +220,5 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "DevToolsNodeWithOutputList": "Node With Output List",
     "DevToolsNodeWithForceInput": "Node With Force Input",
     "DevToolsNodeWithStringInput": "Node With String Input",
+    "DevToolsNodeWithAdvancedWidgets": "Node With Advanced Widgets",
 }
