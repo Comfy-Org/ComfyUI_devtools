@@ -103,7 +103,7 @@ class NodeWithOnlyOptionalInput:
         return {
             "optional": {
                 "text": ("STRING", {"multiline": True, "dynamicPrompts": True}),
-                "clip": ("CLIP", {})
+                "clip": ("CLIP", {}),
             }
         }
 
@@ -158,8 +158,13 @@ class NodeWithForceInput:
     CATEGORY = "DevTools"
     DESCRIPTION = "A node with a forced input"
 
-    def node_with_force_input(self, int_input: int, int_input_widget: int, float_input: float = 0.0):
-        print(f"int_input: {int_input}, int_input_widget: {int_input_widget}, float_input: {float_input}")
+    def node_with_force_input(
+        self, int_input: int, int_input_widget: int, float_input: float = 0.0
+    ):
+        print(
+            f"int_input: {int_input}, int_input_widget: {int_input_widget}, float_input: {float_input}"
+        )
+
 
 class NodeWithStringInput:
     @classmethod
@@ -175,6 +180,39 @@ class NodeWithStringInput:
         print(f"string_input: {string_input}")
 
 
+class NodeWithUnionInput:
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "optional": {
+                "string_or_int_input": ("STRING,INT",),
+                "string_input": ("STRING", {"forceInput": True}),
+                "int_input": ("INT", {"forceInput": True}),
+            }
+        }
+
+    RETURN_TYPES = ()
+    OUTPUT_NODE = True
+    FUNCTION = "node_with_union_input"
+    CATEGORY = "DevTools"
+    DESCRIPTION = "A node with a union input"
+
+    def node_with_union_input(
+        self,
+        string_or_int_input: str | int = "",
+        string_input: str = "",
+        int_input: int = 0,
+    ):
+        print(
+            f"string_or_int_input: {string_or_int_input}, string_input: {string_input}, int_input: {int_input}"
+        )
+        return {
+            "ui": {
+                "text": string_or_int_input,
+            }
+        }
+
+
 NODE_CLASS_MAPPINGS = {
     "DevToolsErrorRaiseNode": ErrorRaiseNode,
     "DevToolsErrorRaiseNodeWithMessage": ErrorRaiseNodeWithMessage,
@@ -186,6 +224,7 @@ NODE_CLASS_MAPPINGS = {
     "DevToolsNodeWithOutputList": NodeWithOutputList,
     "DevToolsNodeWithForceInput": NodeWithForceInput,
     "DevToolsNodeWithStringInput": NodeWithStringInput,
+    "DevToolsNodeWithUnionInput": NodeWithUnionInput,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
@@ -199,4 +238,5 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "DevToolsNodeWithOutputList": "Node With Output List",
     "DevToolsNodeWithForceInput": "Node With Force Input",
     "DevToolsNodeWithStringInput": "Node With String Input",
+    "DevToolsNodeWithUnionInput": "Node With Union Input",
 }
