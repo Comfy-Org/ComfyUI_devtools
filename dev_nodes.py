@@ -212,6 +212,22 @@ class NodeWithUnionInput:
             }
         }
 
+class SimpleSlider:
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "value": ("FLOAT", { "display": "slider", "default": 0.5, "min": 0.0, "max": 1.0, "step": 0.001 }),
+            },
+        }
+
+    RETURN_TYPES = ("FLOAT",)
+    FUNCTION = "execute"
+    CATEGORY = "DevTools"
+
+    def execute(self, value):
+        return (value,)
+
 
 NODE_CLASS_MAPPINGS = {
     "DevToolsErrorRaiseNode": ErrorRaiseNode,
@@ -225,6 +241,7 @@ NODE_CLASS_MAPPINGS = {
     "DevToolsNodeWithForceInput": NodeWithForceInput,
     "DevToolsNodeWithStringInput": NodeWithStringInput,
     "DevToolsNodeWithUnionInput": NodeWithUnionInput,
+    "DevToolsSimpleSlider": SimpleSlider,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
@@ -239,4 +256,5 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "DevToolsNodeWithForceInput": "Node With Force Input",
     "DevToolsNodeWithStringInput": "Node With String Input",
     "DevToolsNodeWithUnionInput": "Node With Union Input",
+    "DevToolsSimpleSlider": "Simple Slider",
 }
