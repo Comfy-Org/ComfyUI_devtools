@@ -65,7 +65,7 @@ class DeprecatedNode:
 class LongComboDropdown:
     @classmethod
     def INPUT_TYPES(cls):
-        return {"required": {"option": ([f"Option {i}" for i in range(1000 * 1000)],)}}
+        return {"required": {"option": ([f"Option {i}" for i in range(1_000)],)}}
 
     RETURN_TYPES = ()
     OUTPUT_NODE = True
