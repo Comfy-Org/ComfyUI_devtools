@@ -1,3 +1,8 @@
+import torch
+import comfy.utils as utils
+from comfy.model_patcher import ModelPatcher
+
+
 class ErrorRaiseNode:
     @classmethod
     def INPUT_TYPES(cls):
@@ -254,6 +259,46 @@ class NodeWithSeedInput:
         print(f"seed: {seed}")
 
 
+class DummyPatch(torch.nn.Module):
+    def __init__(self, module: torch.nn.Module, dummy_float: float = 0.0):
+        super().__init__()
+        self.module = module
+        self.dummy_float = dummy_float
+
+    def forward(self, *args, **kwargs):
+        if isinstance(self.module, DummyPatch):
+            raise Exception(f"Calling nested dummy patch! {self.dummy_float}")
+
+        return self.module(*args, **kwargs)
+
+
+class ObjectPatchNode:
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "model": ("MODEL",),
+                "target_module": ("STRING", {"multiline": True}),
+            },
+            "optional": {
+                "dummy_float": ("FLOAT", {"default": 0.0 }),
+            }
+        }
+
+    RETURN_TYPES = ("MODEL",)
+    FUNCTION = "apply_patch"
+    CATEGORY = "DevTools"
+    DESCRIPTION = "A node that applies an object patch"
+
+    def apply_patch(
+        self, model: ModelPatcher, target_module: str, dummy_float: float = 0.0
+    ) -> ModelPatcher:
+        module = utils.get_attr(model.model, target_module)
+        work_model = model.clone()
+        work_model.add_object_patch(target_module, DummyPatch(module, dummy_float))
+        return (work_model,)
+
+
 NODE_CLASS_MAPPINGS = {
     "DevToolsErrorRaiseNode": ErrorRaiseNode,
     "DevToolsErrorRaiseNodeWithMessage": ErrorRaiseNodeWithMessage,
@@ -268,6 +313,7 @@ NODE_CLASS_MAPPINGS = {
     "DevToolsNodeWithUnionInput": NodeWithUnionInput,
     "DevToolsSimpleSlider": SimpleSlider,
     "DevToolsNodeWithSeedInput": NodeWithSeedInput,
+    "DevToolsObjectPatchNode": ObjectPatchNode,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
@@ -284,4 +330,5 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "DevToolsNodeWithUnionInput": "Node With Union Input",
     "DevToolsSimpleSlider": "Simple Slider",
     "DevToolsNodeWithSeedInput": "Node With Seed Input",
+    "DevToolsObjectPatchNode": "Object Patch Node",
 }
