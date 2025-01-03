@@ -212,12 +212,22 @@ class NodeWithUnionInput:
             }
         }
 
+
 class SimpleSlider:
     @classmethod
     def INPUT_TYPES(cls):
         return {
             "required": {
-                "value": ("FLOAT", { "display": "slider", "default": 0.5, "min": 0.0, "max": 1.0, "step": 0.001 }),
+                "value": (
+                    "FLOAT",
+                    {
+                        "display": "slider",
+                        "default": 0.5,
+                        "min": 0.0,
+                        "max": 1.0,
+                        "step": 0.001,
+                    },
+                ),
             },
         }
 
@@ -227,6 +237,21 @@ class SimpleSlider:
 
     def execute(self, value):
         return (value,)
+
+
+class NodeWithSeedInput:
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {"required": {"seed": ("INT", {"default": 0})}}
+
+    RETURN_TYPES = ()
+    FUNCTION = "node_with_seed_input"
+    CATEGORY = "DevTools"
+    DESCRIPTION = "A node with a seed input"
+    OUTPUT_NODE = True
+
+    def node_with_seed_input(self, seed: int):
+        print(f"seed: {seed}")
 
 
 NODE_CLASS_MAPPINGS = {
@@ -242,6 +267,7 @@ NODE_CLASS_MAPPINGS = {
     "DevToolsNodeWithStringInput": NodeWithStringInput,
     "DevToolsNodeWithUnionInput": NodeWithUnionInput,
     "DevToolsSimpleSlider": SimpleSlider,
+    "DevToolsNodeWithSeedInput": NodeWithSeedInput,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
@@ -257,4 +283,5 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "DevToolsNodeWithStringInput": "Node With String Input",
     "DevToolsNodeWithUnionInput": "Node With Union Input",
     "DevToolsSimpleSlider": "Simple Slider",
+    "DevToolsNodeWithSeedInput": "Node With Seed Input",
 }
