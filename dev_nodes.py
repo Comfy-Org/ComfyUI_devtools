@@ -218,6 +218,20 @@ class NodeWithUnionInput:
         }
 
 
+class NodeWithBooleanInput:
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {"required": {"boolean_input": ("BOOLEAN",)}}
+
+    RETURN_TYPES = ()
+    FUNCTION = "node_with_boolean_input"
+    CATEGORY = "DevTools"
+    DESCRIPTION = "A node with a boolean input"
+
+    def node_with_boolean_input(self, boolean_input: bool):
+        print(f"boolean_input: {boolean_input}")
+
+
 class SimpleSlider:
     @classmethod
     def INPUT_TYPES(cls):
@@ -314,6 +328,7 @@ NODE_CLASS_MAPPINGS = {
     "DevToolsSimpleSlider": SimpleSlider,
     "DevToolsNodeWithSeedInput": NodeWithSeedInput,
     "DevToolsObjectPatchNode": ObjectPatchNode,
+    "DevToolsNodeWithBooleanInput": NodeWithBooleanInput,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
@@ -331,4 +346,5 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "DevToolsSimpleSlider": "Simple Slider",
     "DevToolsNodeWithSeedInput": "Node With Seed Input",
     "DevToolsObjectPatchNode": "Object Patch Node",
+    "DevToolsNodeWithBooleanInput": "Node With Boolean Input",
 }
