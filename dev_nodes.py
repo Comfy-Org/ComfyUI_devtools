@@ -313,84 +313,6 @@ class ObjectPatchNode:
         return (work_model,)
 
 
-class RemoteWidgetNode:
-    @classmethod
-    def INPUT_TYPES(cls):
-        return {
-            "required": {
-                "remote_widget_value": (
-                    "COMBO",
-                    {
-                        "type": "remote",
-                        "route": "/api/models/checkpoints",
-                    },
-                ),
-            },
-        }
-
-    FUNCTION = "remote_widget"
-    CATEGORY = "DevTools"
-    DESCRIPTION = "A node that lazily fetches options from a remote endpoint"
-    RETURN_TYPES = ("STRING",)
-
-    def remote_widget(self, remote_widget_value: str):
-        return (remote_widget_value,)
-
-
-class RemoteWidgetNodeWithParams:
-    @classmethod
-    def INPUT_TYPES(cls):
-        return {
-            "required": {
-                "remote_widget_value": (
-                    "COMBO",
-                    {
-                        "type": "remote",
-                        "route": "/api/models/checkpoints",
-                        "query_params": {
-                            "sort": "true",
-                        },
-                    },
-                ),
-            },
-        }
-
-    FUNCTION = "remote_widget"
-    CATEGORY = "DevTools"
-    DESCRIPTION = (
-        "A node that lazily fetches options from a remote endpoint with query params"
-    )
-    RETURN_TYPES = ("STRING",)
-
-    def remote_widget(self, remote_widget_value: str):
-        return (remote_widget_value,)
-
-
-class RemoteWidgetNodeWithRefresh:
-    @classmethod
-    def INPUT_TYPES(cls):
-        return {
-            "required": {
-                "remote_widget_value": (
-                    "COMBO",
-                    {
-                        "type": "remote",
-                        "route": "/api/models/checkpoints",
-                        "refresh": 300,
-                    },
-                ),
-            },
-        }
-
-    FUNCTION = "remote_widget"
-    CATEGORY = "DevTools"
-    DESCRIPTION = "A node that lazily fetches options from a remote endpoint and refresh the options every 300 ms"
-    RETURN_TYPES = ("STRING",)
-
-    def remote_widget(self, remote_widget_value: str):
-        return (remote_widget_value,)
-
-
 NODE_CLASS_MAPPINGS = {
     "DevToolsErrorRaiseNode": ErrorRaiseNode,
     "DevToolsErrorRaiseNodeWithMessage": ErrorRaiseNodeWithMessage,
@@ -407,9 +329,6 @@ NODE_CLASS_MAPPINGS = {
     "DevToolsNodeWithSeedInput": NodeWithSeedInput,
     "DevToolsObjectPatchNode": ObjectPatchNode,
     "DevToolsNodeWithBooleanInput": NodeWithBooleanInput,
-    "DevToolsRemoteWidgetNode": RemoteWidgetNode,
-    "DevToolsRemoteWidgetNodeWithParams": RemoteWidgetNodeWithParams,
-    "DevToolsRemoteWidgetNodeWithRefresh": RemoteWidgetNodeWithRefresh,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
@@ -428,7 +347,4 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "DevToolsNodeWithSeedInput": "Node With Seed Input",
     "DevToolsObjectPatchNode": "Object Patch Node",
     "DevToolsNodeWithBooleanInput": "Node With Boolean Input",
-    "DevToolsRemoteWidgetNode": "Remote Widget Node",
-    "DevToolsRemoteWidgetNodeWithParams": "Remote Widget Node With Sort Query Param",
-    "DevToolsRemoteWidgetNodeWithRefresh": "Remote Widget Node With 300ms Refresh",
 }
