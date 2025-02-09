@@ -420,7 +420,7 @@ class RemoteWidgetNodeWithRefreshButton:
         return (remote_widget_value,)
 
 
-class RemoteWidgetWithControlAfterRefresh:
+class RemoteWidgetNodeWithControlAfterRefresh:
     @classmethod
     def INPUT_TYPES(cls):
         return {
@@ -467,7 +467,7 @@ NODE_CLASS_MAPPINGS = {
     "DevToolsRemoteWidgetNodeWithParams": RemoteWidgetNodeWithParams,
     "DevToolsRemoteWidgetNodeWithRefresh": RemoteWidgetNodeWithRefresh,
     "DevToolsRemoteWidgetNodeWithRefreshButton": RemoteWidgetNodeWithRefreshButton,
-    "DevToolsRemoteWidgetSelectOnRefresh": RemoteWidgetWithControlAfterRefresh,
+    "DevToolsRemoteWidgetNodeWithControlAfterRefresh": RemoteWidgetNodeWithControlAfterRefresh,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
@@ -490,5 +490,5 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "DevToolsRemoteWidgetNodeWithParams": "Remote Widget Node With Sort Query Param",
     "DevToolsRemoteWidgetNodeWithRefresh": "Remote Widget Node With 300ms Refresh",
     "DevToolsRemoteWidgetNodeWithRefreshButton": "Remote Widget Node With Refresh Button",
-    "DevToolsRemoteWidgetNodeWithRefreshButtonAndSelectOnRefresh": "Remote Widget Node With Refresh Button And Select On Refresh",
+    "DevToolsRemoteWidgetNodeWithControlAfterRefresh": "Remote Widget Node With Refresh Button and Control After Refresh",
 }
