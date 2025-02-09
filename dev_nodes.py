@@ -295,8 +295,8 @@ class ObjectPatchNode:
                 "target_module": ("STRING", {"multiline": True}),
             },
             "optional": {
-                "dummy_float": ("FLOAT", {"default": 0.0 }),
-            }
+                "dummy_float": ("FLOAT", {"default": 0.0}),
+            },
         }
 
     RETURN_TYPES = ("MODEL",)
@@ -394,6 +394,59 @@ class RemoteWidgetNodeWithRefresh:
         return (remote_widget_value,)
 
 
+class RemoteWidgetNodeWithRefreshButton:
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "remote_widget_value": (
+                    "COMBO",
+                    {
+                        "remote": {
+                            "route": "/api/models/checkpoints",
+                            "refresh_button": True,
+                        },
+                    },
+                ),
+            },
+        }
+
+    FUNCTION = "remote_widget"
+    CATEGORY = "DevTools"
+    DESCRIPTION = "A node that lazily fetches options from a remote endpoint and has a refresh button to manually reload options"
+    RETURN_TYPES = ("STRING",)
+
+    def remote_widget(self, remote_widget_value: str):
+        return (remote_widget_value,)
+
+
+class RemoteWidgetNodeWithControlAfterRefresh:
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "remote_widget_value": (
+                    "COMBO",
+                    {
+                        "remote": {
+                            "route": "/api/models/checkpoints",
+                            "refresh_button": True,
+                            "control_after_refresh": "first",
+                        },
+                    },
+                ),
+            },
+        }
+
+    FUNCTION = "remote_widget"
+    CATEGORY = "DevTools"
+    DESCRIPTION = "A node that lazily fetches options from a remote endpoint and has a refresh button to manually reload options and select the first option on refresh"
+    RETURN_TYPES = ("STRING",)
+
+    def remote_widget(self, remote_widget_value: str):
+        return (remote_widget_value,)
+
+
 NODE_CLASS_MAPPINGS = {
     "DevToolsErrorRaiseNode": ErrorRaiseNode,
     "DevToolsErrorRaiseNodeWithMessage": ErrorRaiseNodeWithMessage,
@@ -413,6 +466,8 @@ NODE_CLASS_MAPPINGS = {
     "DevToolsRemoteWidgetNode": RemoteWidgetNode,
     "DevToolsRemoteWidgetNodeWithParams": RemoteWidgetNodeWithParams,
     "DevToolsRemoteWidgetNodeWithRefresh": RemoteWidgetNodeWithRefresh,
+    "DevToolsRemoteWidgetNodeWithRefreshButton": RemoteWidgetNodeWithRefreshButton,
+    "DevToolsRemoteWidgetNodeWithControlAfterRefresh": RemoteWidgetNodeWithControlAfterRefresh,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
@@ -434,4 +489,6 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "DevToolsRemoteWidgetNode": "Remote Widget Node",
     "DevToolsRemoteWidgetNodeWithParams": "Remote Widget Node With Sort Query Param",
     "DevToolsRemoteWidgetNodeWithRefresh": "Remote Widget Node With 300ms Refresh",
+    "DevToolsRemoteWidgetNodeWithRefreshButton": "Remote Widget Node With Refresh Button",
+    "DevToolsRemoteWidgetNodeWithControlAfterRefresh": "Remote Widget Node With Refresh Button and Control After Refresh",
 }
