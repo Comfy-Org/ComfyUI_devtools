@@ -420,7 +420,7 @@ class RemoteWidgetNodeWithRefreshButton:
         return (remote_widget_value,)
 
 
-class RemoteWidgetNodeWithRefreshButtonAndSelectOnRefresh:
+class RemoteWidgetWithSelectOnRefresh:
     @classmethod
     def INPUT_TYPES(cls):
         return {
@@ -431,7 +431,7 @@ class RemoteWidgetNodeWithRefreshButtonAndSelectOnRefresh:
                         "remote": {
                             "route": "/api/models/checkpoints",
                             "refresh_button": "true",
-                            "select_on_refresh": "true",
+                            "select_on_refresh": "first",
                         },
                     },
                 ),
@@ -467,7 +467,7 @@ NODE_CLASS_MAPPINGS = {
     "DevToolsRemoteWidgetNodeWithParams": RemoteWidgetNodeWithParams,
     "DevToolsRemoteWidgetNodeWithRefresh": RemoteWidgetNodeWithRefresh,
     "DevToolsRemoteWidgetNodeWithRefreshButton": RemoteWidgetNodeWithRefreshButton,
-    "DevToolsRemoteWidgetNodeWithRefreshButtonAndSelectOnRefresh": RemoteWidgetNodeWithRefreshButtonAndSelectOnRefresh,
+    "DevToolsRemoteWidgetSelectOnRefresh": RemoteWidgetWithSelectOnRefresh,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
