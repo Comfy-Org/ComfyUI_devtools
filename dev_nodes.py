@@ -404,7 +404,7 @@ class RemoteWidgetNodeWithRefreshButton:
                     {
                         "remote": {
                             "route": "/api/models/checkpoints",
-                            "refresh_button": "true",
+                            "refresh_button": True,
                         },
                     },
                 ),
@@ -430,7 +430,7 @@ class RemoteWidgetWithControlAfterRefresh:
                     {
                         "remote": {
                             "route": "/api/models/checkpoints",
-                            "refresh_button": "true",
+                            "refresh_button": True,
                             "control_after_refresh": "first",
                         },
                     },
