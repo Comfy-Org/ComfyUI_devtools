@@ -379,6 +379,8 @@ class RemoteWidgetNodeWithRefresh:
                         "remote": {
                             "route": "/api/models/checkpoints",
                             "refresh": 300,
+                            "max_retries": 10,
+                            "timeout": 256,
                         },
                     },
                 ),
