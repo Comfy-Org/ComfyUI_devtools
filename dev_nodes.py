@@ -1,7 +1,7 @@
 import torch
 import comfy.utils as utils
 from comfy.model_patcher import ModelPatcher
-
+import time
 
 class ErrorRaiseNode:
     @classmethod
@@ -100,6 +100,27 @@ class NodeWithOptionalInput:
             f"Calling node with required_input: {required_input} and optional_input: {optional_input}"
         )
         return (required_input,)
+
+class NodeWithOptionalComboInput:
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "optional": {"optional_combo_input": (
+                [f"Random Unique Option {time.time()}" for _ in range(8)],
+                {"default": None}
+            )},
+        }
+
+    RETURN_TYPES = ("STRING",)
+    FUNCTION = "node_with_optional_combo_input"
+    CATEGORY = "DevTools"
+    DESCRIPTION = "A node with an optional combo input that returns unique values every time INPUT_TYPES is called"
+
+    def node_with_optional_combo_input(self, optional_combo_input=None):
+        print(
+            f"Calling node with optional_combo_input: {optional_combo_input}"
+        )
+        return (optional_combo_input,)
 
 
 class NodeWithOnlyOptionalInput:
@@ -456,6 +477,7 @@ NODE_CLASS_MAPPINGS = {
     "DevToolsDeprecatedNode": DeprecatedNode,
     "DevToolsLongComboDropdown": LongComboDropdown,
     "DevToolsNodeWithOptionalInput": NodeWithOptionalInput,
+    "DevToolsNodeWithOptionalComboInput": NodeWithOptionalComboInput,
     "DevToolsNodeWithOnlyOptionalInput": NodeWithOnlyOptionalInput,
     "DevToolsNodeWithOutputList": NodeWithOutputList,
     "DevToolsNodeWithForceInput": NodeWithForceInput,
@@ -479,6 +501,7 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "DevToolsDeprecatedNode": "Deprecated Node",
     "DevToolsLongComboDropdown": "Long Combo Dropdown",
     "DevToolsNodeWithOptionalInput": "Node With Optional Input",
+    "DevToolsNodeWithOptionalComboInput": "Node With Optional Combo Input",
     "DevToolsNodeWithOnlyOptionalInput": "Node With Only Optional Input",
     "DevToolsNodeWithOutputList": "Node With Output List",
     "DevToolsNodeWithForceInput": "Node With Force Input",
