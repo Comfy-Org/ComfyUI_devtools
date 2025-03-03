@@ -3,6 +3,7 @@ import comfy.utils as utils
 from comfy.model_patcher import ModelPatcher
 import time
 
+
 class ErrorRaiseNode:
     @classmethod
     def INPUT_TYPES(cls):
@@ -101,14 +102,17 @@ class NodeWithOptionalInput:
         )
         return (required_input,)
 
+
 class NodeWithOptionalComboInput:
     @classmethod
     def INPUT_TYPES(cls):
         return {
-            "optional": {"optional_combo_input": (
-                [f"Random Unique Option {time.time()}" for _ in range(8)],
-                {"default": None}
-            )},
+            "optional": {
+                "optional_combo_input": (
+                    [f"Random Unique Option {time.time()}" for _ in range(8)],
+                    {"default": None},
+                )
+            },
         }
 
     RETURN_TYPES = ("STRING",)
@@ -117,9 +121,7 @@ class NodeWithOptionalComboInput:
     DESCRIPTION = "A node with an optional combo input that returns unique values every time INPUT_TYPES is called"
 
     def node_with_optional_combo_input(self, optional_combo_input=None):
-        print(
-            f"Calling node with optional_combo_input: {optional_combo_input}"
-        )
+        print(f"Calling node with optional_combo_input: {optional_combo_input}")
         return (optional_combo_input,)
 
 
@@ -470,6 +472,28 @@ class RemoteWidgetNodeWithControlAfterRefresh:
         return (remote_widget_value,)
 
 
+class NodeWithOutputCombo:
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "subset_options": (["A", "B"], {"forceInput": True}),
+                "subset_options_v2": (
+                    "COMBO",
+                    {"options": ["A", "B"], "forceInput": True},
+                ),
+            }
+        }
+
+    RETURN_TYPES = (["A", "B", "C"],)
+    FUNCTION = "node_with_output_combo"
+    CATEGORY = "DevTools"
+    DESCRIPTION = "A node that outputs a combo type"
+
+    def node_with_output_combo(self, subset_options: str):
+        return (subset_options,)
+
+
 NODE_CLASS_MAPPINGS = {
     "DevToolsErrorRaiseNode": ErrorRaiseNode,
     "DevToolsErrorRaiseNodeWithMessage": ErrorRaiseNodeWithMessage,
@@ -492,6 +516,7 @@ NODE_CLASS_MAPPINGS = {
     "DevToolsRemoteWidgetNodeWithRefresh": RemoteWidgetNodeWithRefresh,
     "DevToolsRemoteWidgetNodeWithRefreshButton": RemoteWidgetNodeWithRefreshButton,
     "DevToolsRemoteWidgetNodeWithControlAfterRefresh": RemoteWidgetNodeWithControlAfterRefresh,
+    "DevToolsNodeWithOutputCombo": NodeWithOutputCombo,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
@@ -516,4 +541,5 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "DevToolsRemoteWidgetNodeWithRefresh": "Remote Widget Node With 300ms Refresh",
     "DevToolsRemoteWidgetNodeWithRefreshButton": "Remote Widget Node With Refresh Button",
     "DevToolsRemoteWidgetNodeWithControlAfterRefresh": "Remote Widget Node With Refresh Button and Control After Refresh",
+    "DevToolsNodeWithOutputCombo": "Node With Output Combo",
 }
