@@ -494,6 +494,34 @@ class NodeWithOutputCombo:
         return (subset_options,)
 
 
+class MultiSelectNode:
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "foo": (
+                    "COMBO",
+                    {
+                        "options": ["A", "B", "C"],
+                        "multi_select": {
+                            "placeholder": "Choose foos",
+                            "chip": True,
+                        },
+                    },
+                )
+            }
+        }
+
+    RETURN_TYPES = ("STRING",)
+    OUTPUT_IS_LIST = [True]
+    FUNCTION = "multi_select_node"
+    CATEGORY = "DevTools"
+    DESCRIPTION = "A node that outputs a multi select type"
+
+    def multi_select_node(self, foo: list[str]) -> list[str]:
+        return (foo,)
+
+
 NODE_CLASS_MAPPINGS = {
     "DevToolsErrorRaiseNode": ErrorRaiseNode,
     "DevToolsErrorRaiseNodeWithMessage": ErrorRaiseNodeWithMessage,
@@ -517,6 +545,7 @@ NODE_CLASS_MAPPINGS = {
     "DevToolsRemoteWidgetNodeWithRefreshButton": RemoteWidgetNodeWithRefreshButton,
     "DevToolsRemoteWidgetNodeWithControlAfterRefresh": RemoteWidgetNodeWithControlAfterRefresh,
     "DevToolsNodeWithOutputCombo": NodeWithOutputCombo,
+    "DevToolsMultiSelectNode": MultiSelectNode,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
@@ -542,4 +571,5 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "DevToolsRemoteWidgetNodeWithRefreshButton": "Remote Widget Node With Refresh Button",
     "DevToolsRemoteWidgetNodeWithControlAfterRefresh": "Remote Widget Node With Refresh Button and Control After Refresh",
     "DevToolsNodeWithOutputCombo": "Node With Output Combo",
+    "DevToolsMultiSelectNode": "Multi Select Node",
 }
