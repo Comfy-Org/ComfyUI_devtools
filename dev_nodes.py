@@ -194,6 +194,31 @@ class NodeWithForceInput:
         )
 
 
+class NodeWithDefaultInput:
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "int_input": ("INT", {"defaultInput": True}),
+                "int_input_widget": ("INT", {"default": 1}),
+            },
+            "optional": {"float_input": ("FLOAT", {"defaultInput": True})},
+        }
+
+    RETURN_TYPES = ()
+    OUTPUT_NODE = True
+    FUNCTION = "node_with_default_input"
+    CATEGORY = "DevTools"
+    DESCRIPTION = "A node with a default input"
+
+    def node_with_default_input(
+        self, int_input: int, int_input_widget: int, float_input: float = 0.0
+    ):
+        print(
+            f"int_input: {int_input}, int_input_widget: {int_input_widget}, float_input: {float_input}"
+        )
+
+
 class NodeWithStringInput:
     @classmethod
     def INPUT_TYPES(cls):
@@ -533,6 +558,7 @@ NODE_CLASS_MAPPINGS = {
     "DevToolsNodeWithOnlyOptionalInput": NodeWithOnlyOptionalInput,
     "DevToolsNodeWithOutputList": NodeWithOutputList,
     "DevToolsNodeWithForceInput": NodeWithForceInput,
+    "DevToolsNodeWithDefaultInput": NodeWithDefaultInput,
     "DevToolsNodeWithStringInput": NodeWithStringInput,
     "DevToolsNodeWithUnionInput": NodeWithUnionInput,
     "DevToolsSimpleSlider": SimpleSlider,
@@ -559,6 +585,7 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "DevToolsNodeWithOnlyOptionalInput": "Node With Only Optional Input",
     "DevToolsNodeWithOutputList": "Node With Output List",
     "DevToolsNodeWithForceInput": "Node With Force Input",
+    "DevToolsNodeWithDefaultInput": "Node With Default Input",
     "DevToolsNodeWithStringInput": "Node With String Input",
     "DevToolsNodeWithUnionInput": "Node With Union Input",
     "DevToolsSimpleSlider": "Simple Slider",
