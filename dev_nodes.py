@@ -1,7 +1,10 @@
 import torch
 import comfy.utils as utils
 from comfy.model_patcher import ModelPatcher
+import nodes
 import time
+import os
+import folder_paths
 
 
 class ErrorRaiseNode:
@@ -547,6 +550,21 @@ class MultiSelectNode:
         return (foo,)
 
 
+class LoadAnimatedImageTest(nodes.LoadImage):
+    @classmethod
+    def INPUT_TYPES(s):
+        input_dir = folder_paths.get_input_directory()
+        files = [
+            f
+            for f in os.listdir(input_dir)
+            if os.path.isfile(os.path.join(input_dir, f)) and f.endswith(".webp")
+        ]
+        files = folder_paths.filter_files_content_types(files, ["image"])
+        return {
+            "required": {"image": (sorted(files), {"animated_image_upload": True})},
+        }
+
+
 NODE_CLASS_MAPPINGS = {
     "DevToolsErrorRaiseNode": ErrorRaiseNode,
     "DevToolsErrorRaiseNodeWithMessage": ErrorRaiseNodeWithMessage,
@@ -572,6 +590,7 @@ NODE_CLASS_MAPPINGS = {
     "DevToolsRemoteWidgetNodeWithControlAfterRefresh": RemoteWidgetNodeWithControlAfterRefresh,
     "DevToolsNodeWithOutputCombo": NodeWithOutputCombo,
     "DevToolsMultiSelectNode": MultiSelectNode,
+    "DevToolsLoadAnimatedImageTest": LoadAnimatedImageTest,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
@@ -599,4 +618,5 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "DevToolsRemoteWidgetNodeWithControlAfterRefresh": "Remote Widget Node With Refresh Button and Control After Refresh",
     "DevToolsNodeWithOutputCombo": "Node With Output Combo",
     "DevToolsMultiSelectNode": "Multi Select Node",
+    "DevToolsLoadAnimatedImageTest": "Load Animated Image",
 }
