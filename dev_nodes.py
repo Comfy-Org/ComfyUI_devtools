@@ -565,6 +565,30 @@ class LoadAnimatedImageTest(nodes.LoadImage):
         }
 
 
+class NodeWithValidation:
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {"int_input": ("INT",)},
+        }
+
+    @classmethod
+    def VALIDATE_INPUTS(cls, int_input: int):
+        if int_input < 0:
+            raise ValueError("int_input must be greater than 0")
+        return True
+
+    RETURN_TYPES = ()
+    FUNCTION = "execute"
+    CATEGORY = "DevTools"
+    DESCRIPTION = "A node that validates an input"
+    OUTPUT_NODE = True
+
+    def execute(self, int_input: int):
+        print(f"int_input: {int_input}")
+        return tuple()
+
+
 NODE_CLASS_MAPPINGS = {
     "DevToolsErrorRaiseNode": ErrorRaiseNode,
     "DevToolsErrorRaiseNodeWithMessage": ErrorRaiseNodeWithMessage,
@@ -591,6 +615,7 @@ NODE_CLASS_MAPPINGS = {
     "DevToolsNodeWithOutputCombo": NodeWithOutputCombo,
     "DevToolsMultiSelectNode": MultiSelectNode,
     "DevToolsLoadAnimatedImageTest": LoadAnimatedImageTest,
+    "DevToolsNodeWithValidation": NodeWithValidation,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
@@ -619,4 +644,5 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "DevToolsNodeWithOutputCombo": "Node With Output Combo",
     "DevToolsMultiSelectNode": "Multi Select Node",
     "DevToolsLoadAnimatedImageTest": "Load Animated Image",
+    "DevToolsNodeWithValidation": "Node With Validation",
 }
