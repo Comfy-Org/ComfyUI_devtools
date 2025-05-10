@@ -588,6 +588,29 @@ class NodeWithValidation:
         print(f"int_input: {int_input}")
         return tuple()
 
+class NodeWithV2ComboInput:
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "combo_input": (
+                    "COMBO",
+                    {"options": ["A", "B"]},
+                ),
+            }
+        }
+
+    RETURN_TYPES = ("COMBO",)
+    FUNCTION = "node_with_v2_combo_input"
+    CATEGORY = "DevTools"
+    DESCRIPTION = (
+        "A node that outputs a combo type that adheres to the v2 combo input spec"
+    )
+
+    def node_with_v2_combo_input(self, combo_input: str):
+        return (combo_input,)
+
 
 NODE_CLASS_MAPPINGS = {
     "DevToolsErrorRaiseNode": ErrorRaiseNode,
@@ -616,6 +639,7 @@ NODE_CLASS_MAPPINGS = {
     "DevToolsMultiSelectNode": MultiSelectNode,
     "DevToolsLoadAnimatedImageTest": LoadAnimatedImageTest,
     "DevToolsNodeWithValidation": NodeWithValidation,
+    "DevToolsNodeWithV2ComboInput": NodeWithV2ComboInput,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
@@ -645,4 +669,5 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "DevToolsMultiSelectNode": "Multi Select Node",
     "DevToolsLoadAnimatedImageTest": "Load Animated Image",
     "DevToolsNodeWithValidation": "Node With Validation",
+    "DevToolsNodeWithV2ComboInput": "Node With V2 Combo Input",
 }
