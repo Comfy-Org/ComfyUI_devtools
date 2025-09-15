@@ -522,6 +522,7 @@ class RemoteWidgetNodeWithControlAfterRefresh:
             },
         }
 
+    RETURN_TYPES = ("STRING",)
     FUNCTION = "remote_widget"
     CATEGORY = "DevTools"
     DESCRIPTION = "A node that fetches options and selects the first option after a manual refresh"
@@ -545,8 +546,8 @@ class NodeWithOutputCombo:
     CATEGORY = "DevTools"
     DESCRIPTION = "A node that outputs a combo type"
 
-    def node_with_output_combo(self, subset_options: str):
-        return (subset_options,)
+    def node_with_output_combo(self, subset_options: str, subset_options_v2: str):
+        return (subset_options_v2 or subset_options)
 
 
 class MultiSelectNode:
@@ -568,7 +569,7 @@ class MultiSelectNode:
         }
 
     RETURN_TYPES = ("STRING",)
-    OUTPUT_IS_LIST = [True]
+    OUTPUT_IS_LIST = (True,)
     FUNCTION = "multi_select_node"
     CATEGORY = "DevTools"
     DESCRIPTION = "A node that outputs a multi select type"
